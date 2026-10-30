@@ -19,7 +19,7 @@
       <nav id="mainNav">
         <a href="#home">خانه</a><a href="#services">خدمات</a><a href="#steps">مراحل سفارش</a><a href="#contact">تماس با ما</a>
       </nav>
-      <a class="nav-cta" href="#contact">ثبت درخواست <span>←</span></a>
+      <div class="account-actions"><button class="nav-cta" id="openAuth">ورود / ثبت‌نام</button><button class="nav-cta hidden" id="openDashboard">حساب کاربری</button></div>
     </div>
   </header>
 
@@ -71,22 +71,27 @@
     </div></section>
 
     <section class="section contact-section" id="contact"><div class="container contact-grid">
-      <div class="contact-copy"><span class="section-kicker">ارتباط با ما</span><h2>درخواستت را ثبت کن</h2><p>فرم را پر کن تا اطلاعات درخواستت آماده شود. برای ارسال واقعی فرم، لازم است آن را به شماره تماس، ایمیل یا سرویس فرم خودت متصل کنی.</p>
+      <div class="contact-copy"><span class="section-kicker">ارتباط با ما</span><h2>درخواستت را ثبت کن</h2><p>برای ثبت سفارش و دریافت کد رهگیری، ابتدا وارد حساب کاربری شو. سفارش‌ها در حساب شما ذخیره می‌شوند.</p>
         <div class="contact-tip"><span>i</span><div><b>یادآوری امنیتی</b><small>رمز عبور، کد یک‌بارمصرف و اطلاعات بانکی را داخل فرم ننویس.</small></div></div>
         <div class="contact-details"><div class="detail-icon">◷</div><div><b>زمان پاسخ‌گویی</b><span>پس از دریافت درخواست، زمان مناسب برای هماهنگی مشخص می‌شود.</span></div></div>
       </div>
       <form class="request-form" id="requestForm">
+        <div class="auth-required" id="authRequired">برای ثبت سفارش ابتدا <button type="button" class="text-button" id="authFromForm">وارد حساب کاربری</button> شوید.</div>
         <h3>فرم درخواست خدمات</h3><p class="form-subtitle">موارد ستاره‌دار الزامی هستند.</p>
         <label for="name">نام و نام خانوادگی <em>*</em></label><input id="name" name="name" autocomplete="name" required placeholder="نام شما">
         <label for="phone">شماره تماس <em>*</em></label><input id="phone" name="phone" inputmode="tel" autocomplete="tel" required placeholder="مثلاً ۰۹۱۲۱۲۳۴۵۶۷">
         <label for="service">نوع خدمت <em>*</em></label><select id="service" name="service" required><option value="">انتخاب کنید</option><option>ثبت‌نام اینترنتی</option><option>خدمات اداری</option><option>تایپ و نگارش</option><option>خدمات دانشجویی</option><option>رزومه و آماده‌سازی فایل</option><option>سایر خدمات</option></select>
         <label for="details">توضیحات درخواست</label><textarea id="details" name="details" rows="4" placeholder="در چند جمله توضیح دهید چه کمکی نیاز دارید..."></textarea>
-        <button class="btn btn-primary submit-btn" type="submit">آماده‌سازی درخواست <span>←</span></button>
+        <button class="btn btn-primary submit-btn" type="submit" id="submitOrder">ثبت سفارش و دریافت کد رهگیری <span>←</span></button>
         <div id="formMessage" class="form-message" role="status" aria-live="polite"></div>
       </form>
     </div></section>
   </main>
+  <section class="account-section hidden" id="dashboardSection"><div class="container"><div class="dashboard-head"><div><span class="section-kicker">پنل کاربری</span><h2 id="dashboardTitle">سفارش‌های من</h2><p id="userEmail"></p></div><div class="dashboard-actions"><button class="btn btn-light" id="refreshOrders">به‌روزرسانی</button><button class="btn btn-light" id="signOut">خروج</button></div></div><div class="admin-tools hidden" id="adminTools"><h3>مدیریت سفارش‌ها</h3><p>وضعیت هر سفارش را تغییر دهید. تغییرات برای صاحب سفارش قابل مشاهده است.</p></div><div id="ordersList" class="orders-list"><p>برای مشاهده سفارش‌ها وارد شوید.</p></div></div></section>
+  <div class="modal hidden" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle"><div class="modal-card"><button class="modal-close" id="closeAuth" aria-label="بستن">×</button><span class="section-kicker">حساب کاربری</span><h2 id="authTitle">ورود یا ثبت‌نام</h2><p class="modal-intro">با ایمیل و رمز عبور وارد شوید یا حساب جدید بسازید.</p><form id="authForm"><label for="authEmail">ایمیل</label><input id="authEmail" type="email" autocomplete="email" required placeholder="name@example.com"><label for="authPassword">رمز عبور</label><input id="authPassword" type="password" minlength="8" autocomplete="current-password" required placeholder="حداقل ۸ نویسه"><div class="auth-buttons"><button class="btn btn-primary" type="submit" id="loginButton">ورود</button><button class="btn btn-light" type="button" id="signupButton">ثبت‌نام</button></div><div class="form-message" id="authMessage" role="status"></div></form><small class="privacy-note">رمز عبور توسط سرویس امن Supabase مدیریت می‌شود و در سایت ذخیره نمی‌شود.</small></div></div>
   <footer class="site-footer"><div class="container footer-inner"><a class="brand footer-brand" href="#home"><span class="brand-mark">ک</span><span><strong>کافی‌نت آنلاین</strong><small>خدمات اینترنتی، آسان و سریع</small></span></a><p>© <span id="year"></span> کافی‌نت آنلاین — تمامی حقوق محفوظ است.</p><a href="#home" class="back-top">بازگشت به بالا ↑</a></div></footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
